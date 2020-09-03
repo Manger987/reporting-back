@@ -17,13 +17,14 @@ module.exports = {
       favorito: {
         type: Sequelize.INTEGER
       },
+      visto: DataTypes.INTEGER,
       createdAt: {
         allowNull: false,
         defaultValue: Sequelize.NOW,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       }
     });

@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const usuario_reporte = require('./usuario_reporte');
 module.exports = (sequelize, DataTypes) => {
   class reporte extends Model {
     /**
@@ -42,5 +43,13 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'reporte',
   });
+  reporte.associate = function(models) {
+    // associations can be defined here
+    reporte.hasMany(models.usuario_reporte,
+        {
+            foreignKey: 'reporte_id',
+        }
+    );
+  };
   return reporte;
 };

@@ -15,10 +15,10 @@ exports.list = async () => {
         .catch(error => { throw new Error(error)});
 }
 
-exports.findByUname = async (uname) => {
+exports.findByUsername = async (username) => {
     return await usuario.findAll({
         where: {
-            uname: uname,
+            username: username,
         }
     })
     .then(usuario => usuario)
@@ -35,4 +35,22 @@ exports.destroy = async (usuarioDelete) => {
     return await usuario.destroy({ where: { id: usuarioDelete.id } })
     .then(usuario => usuario)
     .catch(error => { throw new Error(error)});
+}
+
+exports.loggin = async (username, password) => {
+    dataReturn = {};
+    const user = await usuario.findOne({ where: { username: username } }).then((userReturn) => userReturn);
+    if (!user) { //sino encuentra usuario lo crea
+        usuario.create({username, password}).then((userCreated) => { 
+            dataReturn.code = 200
+            dataReturn.data = userCreated.dataValues;    
+        });
+    } else if (!user.validPassword(password)) {
+        dataReturn.code = 204
+        dataReturn.message = "Password incorrecto";
+    } else {
+        dataReturn.code = 200
+        dataReturn.data = user.dataValues;
+    }
+    return dataReturn;
 }

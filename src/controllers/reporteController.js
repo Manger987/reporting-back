@@ -1,5 +1,6 @@
 
 const reporteService = require("../services/reporteServices");
+const usuarioReporteService = require("../services/usuarioReporteServices");
 module.exports = {
  async create(req, res) {
      try{
@@ -75,6 +76,26 @@ module.exports = {
     try{
         const idtType = { id } = req.params;
         const reporte = await reporteService.findAllReportsByType(idtType); //req.params
+        res.status(200).send(reporte);    
+    } catch(error) {
+        console.error("ERROR:",error);
+        res.status(400).send(error);
+    }
+  },
+  async listReportsViewed (req, res) {
+    try{
+        const usuario_id = req.params.id;
+        const reporte = await usuarioReporteService.listReportsViewed(usuario_id); //req.params
+        res.status(200).send(reporte);    
+    } catch(error) {
+        console.error("ERROR:",error);
+        res.status(400).send(error);
+    }
+  },
+  async listReportsFavorites (req, res) {
+    try{
+        const usuario_id = req.params.id;
+        const reporte = await usuarioReporteService.listReportsFavorites(usuario_id); //req.params
         res.status(200).send(reporte);    
     } catch(error) {
         console.error("ERROR:",error);

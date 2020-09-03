@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const bcrypt = require("bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class usuario extends Model {
     /**
@@ -23,8 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     apellido_paterno: DataTypes.STRING,
     apellido_materno: DataTypes.STRING,
-    uname: DataTypes.STRING,
+    username: DataTypes.STRING,
     usuario_sad_id: DataTypes.INTEGER,
+    password: DataTypes.STRING,
     createdAt: {
       allowNull: false,
       defaultValue: DataTypes.NOW,
@@ -42,6 +42,21 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {},
     sequelize,
     modelName: 'usuario',
+    instanceMethods: {
+      validPassword: function(password) {
+        return bcrypt.compareSync(password, this.password);
+      }
+    },
+    hooks: {
+      beforeCreate: (user) => {
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(user.password, salt);
+      }
+    },   
   });
+
+  usuario.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  }
   return usuario;
 };

@@ -11,8 +11,10 @@ module.exports = (app) => {
    app.post('/usuario/create', usuarioController.create);
    app.post('/usuario/update', usuarioController.update);
    app.get('/usuario/list', usuarioController.list);
-   app.get('/usuario/find/:uname', usuarioController.find);
+   app.get('/usuario/find/:username', usuarioController.find);
    app.get('/usuario/delete/:id', usuarioController.delete);
+   app.post('/usuario/connectLoggin', usuarioController.connectLoggin);
+   app.post('/usuario/loggin', usuarioController.loggin);
    //Reporte
    app.post('/reporte/create', reporteController.create);
    app.post('/reporte/update', reporteController.update);
@@ -23,6 +25,8 @@ module.exports = (app) => {
    app.post('/reporte/reportAssignsType', reporteController.reportAssignsType);
    app.get('/reporte/reportTypeDestroy/:id', reporteController.reportTypeDestroy);
    app.get('/reporte/findAllReportsByType/:id', reporteController.findAllReportsByType);
+   app.get('/reporte/listReportsViewed/:id', reporteController.listReportsViewed);
+   app.get('/reporte/listReportsFavorites/:id', reporteController.listReportsFavorites);
    //Perfil
    app.post('/perfil/create', perfilController.create);
    app.post('/perfil/update', perfilController.update);

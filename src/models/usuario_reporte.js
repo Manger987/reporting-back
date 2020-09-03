@@ -20,10 +20,33 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    usuario_id: DataTypes.INTEGER,
-    reporte_id: DataTypes.INTEGER,
+    usuario_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+          model: 'usuario',
+          key: 'id'
+      }
+    },
+    reporte_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+          model: 'reporte',
+          key: 'id'
+      }
+    },
     favorito: DataTypes.INTEGER,
-    createdAt: DataTypes.DATE
+    createdAt: {
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: true,
+      defaultValue: DataTypes.NOW,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'usuario_reporte',
@@ -43,6 +66,6 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'reporte_id',
         }
     );
-};
+  };
   return usuario_reporte;
 };

@@ -6,13 +6,6 @@
     "host": "devel2.fen.uchile.cl",
     "dialect": "mysql"
   },
-  "development2": {
-    "username": "root",
-    "password": null,
-    "database": "database_dev",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
   "test": {
     "username": "root",
     "password": null,
@@ -26,5 +19,9 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
+  },
+  "conectionActiveDirectory": {
+    "url": "ldap://172.16.200.200:389",
+    "baseDN": "dc=fen.uchile,dc=cl"
   }
 }

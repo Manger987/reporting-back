@@ -17,12 +17,13 @@ module.exports = {
       apellido_materno: {
         type: Sequelize.STRING
       },
-      uname: {
+      username: {
         type: Sequelize.STRING
       },
       usuario_sad_id: {
         type: Sequelize.INTEGER
       },
+      password: Sequelize.STRING,
       createdAt: {
         allowNull: false,
         defaultValue: Sequelize.NOW,
