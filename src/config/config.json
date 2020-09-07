@@ -23,5 +23,6 @@
   "conectionActiveDirectory": {
     "url": "ldap://172.16.200.200:389",
     "baseDN": "dc=fen.uchile,dc=cl"
-  }
+  },
+  "secret": "SECTRET3NCRYPT"
 }

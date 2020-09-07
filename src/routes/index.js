@@ -3,6 +3,7 @@ const usuarioController = require('../controllers/usuarioController');
 const reporteController = require('./../controllers/reporteController');
 const perfilController = require('./../controllers/perfilController');
 const rolController = require('./../controllers/rolController');
+const AuthSaveRoutes = require('./../controllers/sistemController').AuthSaveRoutes;
 module.exports = (app) => {
    app.get('/', (req, res) => res.status(200).send ({
         message: 'Example project did not give you access to the api web services',
@@ -18,7 +19,7 @@ module.exports = (app) => {
    //Reporte
    app.post('/reporte/create', reporteController.create);
    app.post('/reporte/update', reporteController.update);
-   app.get('/reporte/list', reporteController.list);
+   app.get('/reporte/list', AuthSaveRoutes, reporteController.list);
    app.get('/reporte/find/:id', reporteController.find);
    app.get('/reporte/delete/:id', reporteController.delete);
    //Reporte/report_type

@@ -1,8 +1,9 @@
 
 const ldap = require("ldapjs");
+const jwt = require('jsonwebtoken');
 const UsuarioService = require("../services/usuarioServices");
 const sistemServices = require("../services/sistemServices");
-const config = require("./../config/config.json").conectionActiveDirectory;
+const config = require("./../config/config.json");
 
 module.exports = {
  async create(req, res) {
@@ -57,7 +58,7 @@ module.exports = {
         const { username, password } = req.body ? req.body : req.params;
         console.log(username);
         const client = ldap.createClient({
-            url: config.url
+            url: config.conectionActiveDirectory.url
         });
         client.bind(username, password, function(err) {
             if (err) {
@@ -80,6 +81,10 @@ module.exports = {
         if(AuthLogin.code === 200) {
             //creacion usuario
             const user = await UsuarioService.loggin(username, password);
+            console.log(user);
+            if(user.code === 200)
+                user.data.token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: 1440 });//1d
+            
             res.send(user);
         }
     } catch (error) {
