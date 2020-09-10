@@ -92,6 +92,16 @@ module.exports = {
         res.status(400).send(error);
     }
   },
+  async listReportsByUser (req, res) {
+    try{
+        const usuario_id = req.params.id;
+        const reporte = await usuarioReporteService.listReportsByUser(usuario_id);
+        res.status(200).send(reporte);    
+    } catch(error) {
+        console.error("ERROR:",error);
+        res.status(400).send(error);
+    }
+  },
   async listReportsFavorites (req, res) {
     try{
         const usuario_id = req.params.id;
@@ -101,5 +111,15 @@ module.exports = {
         console.error("ERROR:",error);
         res.status(400).send(error);
     }
-  }
+  },
+  async listReportsByTypeAndUser (req, res) {
+    try{
+        const {usuario_id, tipo_id} = req.params;
+        const reporte = await usuarioReporteService.listReportsByTypeAndUser(usuario_id, tipo_id); //req.params
+        res.status(200).send(reporte);    
+    } catch(error) {
+        console.error("ERROR:",error);
+        res.status(400).send(error);
+    }
+  },
 };

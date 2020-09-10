@@ -43,12 +43,17 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'reporte',
   });
-  reporte.associate = function(models) {
+  reporte.associate = function (models) {
     // associations can be defined here
     reporte.hasMany(models.usuario_reporte,
-        {
-            foreignKey: 'reporte_id',
-        }
+      {
+        foreignKey: 'reporte_id',
+      }
+    );
+    reporte.hasMany(models.reporte_tipo,
+      {
+        foreignKey: 'reporte_id',
+      }
     );
   };
   return reporte;

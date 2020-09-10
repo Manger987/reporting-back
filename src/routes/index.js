@@ -3,6 +3,7 @@ const usuarioController = require('../controllers/usuarioController');
 const reporteController = require('./../controllers/reporteController');
 const perfilController = require('./../controllers/perfilController');
 const rolController = require('./../controllers/rolController');
+const tipoController = require('./../controllers/tipoController');
 const AuthSaveRoutes = require('./../controllers/sistemController').AuthSaveRoutes;
 module.exports = (app) => {
    app.get('/', (req, res) => res.status(200).send ({
@@ -27,7 +28,9 @@ module.exports = (app) => {
    app.get('/reporte/reportTypeDestroy/:id', reporteController.reportTypeDestroy);
    app.get('/reporte/findAllReportsByType/:id', reporteController.findAllReportsByType);
    app.get('/reporte/listReportsViewed/:id', reporteController.listReportsViewed);
+   app.get('/reporte/listReportsByUser/:id', AuthSaveRoutes, reporteController.listReportsByUser);
    app.get('/reporte/listReportsFavorites/:id', reporteController.listReportsFavorites);
+   app.get('/reporte/listReportsByTypeAndUser/:usuario_id/:tipo_id', reporteController.listReportsByTypeAndUser);
    //Perfil
    app.post('/perfil/create', perfilController.create);
    app.post('/perfil/update', perfilController.update);
@@ -40,5 +43,10 @@ module.exports = (app) => {
    app.get('/rol/list', rolController.list);
    app.get('/rol/find/:id', rolController.find);
    app.get('/rol/delete/:id', rolController.delete);
-   
+   //tipo
+   app.post('/tipo/create', tipoController.create);
+   app.post('/tipo/update', tipoController.update);
+   app.get('/tipo/list', tipoController.list);
+   app.get('/tipo/find/:id', tipoController.find);
+   app.get('/tipo/delete/:id', tipoController.delete);
 };

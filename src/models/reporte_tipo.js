@@ -28,11 +28,11 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
       }
     },
-    tipo_reporte_id: {
+    tipo_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-          model: 'tipo_reporte',
+          model: 'tipo',
           key: 'id'
       }
     },
@@ -59,10 +59,10 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'reporte_id',
         }
     );
-    reporte_tipo.belongsTo(models.tipo_reporte,
+    reporte_tipo.belongsTo(models.tipo,
         {
-            as: 'tipo_reporte',
-            foreignKey: 'tipo_reporte_id',
+            as: 'tipo',
+            foreignKey: 'tipo_id',
         }
     );
   }

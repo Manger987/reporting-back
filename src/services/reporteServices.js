@@ -1,7 +1,7 @@
 const Sequelize     = require('sequelize');
 const reporte       = require('../models').reporte;
 const reporte_tipo  = require('../models').reporte_tipo;
-const tipo_reporte  = require('../models').tipo_reporte;
+const tipo  = require('../models').tipo;
 
 exports.create = async (reporteData) => {
     return await reporte
@@ -65,14 +65,14 @@ exports.DestroyReportType = async (reporteTypeDelete) => {
 exports.findAllReportsByType = async (reporteTipo) => {
     return await reporte_tipo.findAll({
         where: {
-            tipo_reporte_id: reporteTipo.id,
+            tipo_id: reporteTipo.id,
         },
         include: [{
             model: reporte,
             as: 'reporte'
         },{
-            model: tipo_reporte,
-            as: 'tipo_reporte'
+            model: tipo,
+            as: 'tipo'
         }]
     })
     .then(reporte => reporte)

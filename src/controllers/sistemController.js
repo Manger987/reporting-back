@@ -6,15 +6,16 @@ module.exports = {
         if (token) {
             jwt.verify(token, config, (err, decoded) => {
                 if (err) {
-                    return res.json({ mensaje: 'Token inválida' });
+                    return res.status(401).json({code:401, message: 'Token inválida' });
                 } else {
                     req.decoded = decoded;
                     next();
                 }
             });
         } else {
-            res.send({
-                mensaje: 'Token no proveída.'
+            res.status(401).send({
+                code:401,
+                message: 'Token no proveída.'
             });
         }
     }

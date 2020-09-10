@@ -1,6 +1,6 @@
 const Sequelize     = require('sequelize');
 const usuario       = require('../models').usuario;
-
+const usuario_tipo_perfil       = require('../models').usuario_tipo_perfil;
 
 exports.create = async (usuarioData) => {
     return await usuario
@@ -39,7 +39,14 @@ exports.destroy = async (usuarioDelete) => {
 
 exports.loggin = async (username, password) => {
     dataReturn = {};
-    const user = await usuario.findOne({ where: { username: username } }).then((userReturn) => userReturn);
+    const user = await usuario.findOne({
+        include: [
+            {
+                model: usuario_tipo_perfil
+            },
+        ], 
+        where: { username: username } 
+    }).then((userReturn) => userReturn);
     if (!user) { //sino encuentra usuario lo crea
         usuario.create({username, password}).then((userCreated) => { 
             dataReturn.code = 200

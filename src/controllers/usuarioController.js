@@ -83,7 +83,7 @@ module.exports = {
             const user = await UsuarioService.loggin(username, password);
             console.log(user);
             if(user.code === 200)
-                user.data.token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: 1440 });//1d
+                user.data.token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '24h' });//1d
             
             res.send(user);
         }

@@ -11,7 +11,7 @@ module.exports = {
       reporte_id: {
         type: Sequelize.INTEGER
       },
-      tipo_reporte_id: {
+      tipo_id: {
         type: Sequelize.INTEGER
       },
       createdAt: {
