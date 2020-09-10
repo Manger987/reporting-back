@@ -24,6 +24,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       password: Sequelize.STRING,
+      email: Sequelize.STRING,
       createdAt: {
         allowNull: false,
         defaultValue: Sequelize.NOW,

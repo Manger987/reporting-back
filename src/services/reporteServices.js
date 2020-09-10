@@ -62,19 +62,21 @@ exports.DestroyReportType = async (reporteTypeDelete) => {
     });
 }
 
-exports.findAllReportsByType = async (reporteTipo) => {
-    return await reporte_tipo.findAll({
-        where: {
-            tipo_id: reporteTipo.id,
-        },
-        include: [{
-            model: reporte,
-            as: 'reporte'
-        },{
-            model: tipo,
-            as: 'tipo'
-        }]
-    })
-    .then(reporte => reporte)
-    .catch(error => { throw new Error(error)});
+exports.findAllReportsByType = async (tipo_id) => {
+    if(tipo_id === null) throw("no viene tipo especificado");
+    return await reporte
+        .findAll({
+            include: [
+                {
+                    model: reporte_tipo,
+                where: {
+                    tipo_id: tipo_id,
+                }
+                }
+            ],
+        })
+        .then((usuario) => usuario)
+        .catch((error) => {
+            throw new Error(error);
+        });
 }

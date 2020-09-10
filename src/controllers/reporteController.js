@@ -74,7 +74,7 @@ module.exports = {
   },
   async findAllReportsByType (req, res) {
     try{
-        const idtType = { id } = req.params;
+        const idtType = req.params.id;
         const reporte = await reporteService.findAllReportsByType(idtType); //req.params
         res.status(200).send(reporte);    
     } catch(error) {
