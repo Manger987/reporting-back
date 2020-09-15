@@ -36,7 +36,10 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
       }
     },
-    favorito: DataTypes.INTEGER,
+    favorito: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     createdAt: {
       allowNull: false,
       defaultValue: DataTypes.NOW,

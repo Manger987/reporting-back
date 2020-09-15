@@ -1,4 +1,5 @@
 const { Op } = require("sequelize");
+const sequelize     = require('sequelize');
 const usuario_reporte = require("../models").usuario_reporte;
 const usuario = require("../models").usuario;
 const reporte = require("../models").reporte;
@@ -22,14 +23,28 @@ exports.list = async () => {
         });
 };
 
-exports.findByUname = async (uname) => {
+exports.findById = async (id) => {
     return await usuario_reporte
         .findAll({
             where: {
-                uname: uname,
+                id: id,
             },
         })
-        .then((usuario) => usuario)
+        .then((usuarioReporte) => usuarioReporte)
+        .catch((error) => {
+            throw new Error(error);
+        });
+};
+
+exports.findByUserAndReporte = async (usuario_id, reporte_id) => {
+    return await usuario_reporte
+        .findOne({
+            where: {
+                usuario_id: usuario_id,
+                reporte_id: reporte_id
+            },
+        })
+        .then((usuarioReporte) => usuarioReporte)
         .catch((error) => {
             throw new Error(error);
         });
@@ -56,6 +71,20 @@ exports.destroy = async (usuarioDelete) => {
 exports.listReportsViewed = async (usuario_id) => {
     return await reporte
         .findAll({
+            attributes:[
+                'id','nombre','descripcion', 'url','vista_reporte','fecha_visualizacion','usuario_creador','archivo','createdAt','updatedAt',
+                [
+                    sequelize.literal(`(
+                        SELECT favorito
+                        FROM usuario_reportes AS usuario_reporte
+                        WHERE
+                            usuario_reporte.usuario_id = ${usuario_id}
+                            AND
+                            usuario_reporte.reporte_id = reporte.id
+                    )`),
+                    'favorito'
+                ]
+            ],
             include: [
                 {
                     model: usuario_reporte,
@@ -74,31 +103,25 @@ exports.listReportsViewed = async (usuario_id) => {
         .catch((error) => {
             throw new Error(error);
         });
-    /*return await usuario_reporte.findAll({
-          where: {
-              usuario_id: usuario_id,
-              updatedAt:{
-                  [Op.or]: {
-                      [Op.not] : '0000-00-00 00:00:00',
-                      [Op.not] : null
-                  }
-              }
-          },
-          include: [{
-              model: usuario,
-              as: 'usuario'
-          },{
-              model: reporte,
-              as: 'reporte'
-          }]
-      })
-      .then(reporte => reporte)
-      .catch(error => { throw new Error(error)});*/
 };
 
 exports.listReportsByUser = async (usuario_id) => {
     return await reporte
         .findAll({
+            attributes:[
+                'id','nombre','descripcion', 'url','vista_reporte','fecha_visualizacion','usuario_creador','archivo','createdAt','updatedAt',
+                [
+                    sequelize.literal(`(
+                        SELECT favorito
+                        FROM usuario_reportes AS usuario_reporte
+                        WHERE
+                            usuario_reporte.usuario_id = ${usuario_id}
+                            AND
+                            usuario_reporte.reporte_id = reporte.id
+                    )`),
+                    'favorito'
+                ]
+            ],
             include: [
                 {
                     model: usuario_reporte,
@@ -117,6 +140,20 @@ exports.listReportsByUser = async (usuario_id) => {
 exports.listReportsFavorites = async (usuario_id) => {
     return await reporte
         .findAll({
+            attributes:[
+                'id','nombre','descripcion', 'url','vista_reporte','fecha_visualizacion','usuario_creador','archivo','createdAt','updatedAt',
+                [
+                    sequelize.literal(`(
+                        SELECT favorito
+                        FROM usuario_reportes AS usuario_reporte
+                        WHERE
+                            usuario_reporte.usuario_id = ${usuario_id}
+                            AND
+                            usuario_reporte.reporte_id = reporte.id
+                    )`),
+                    'favorito'
+                ]
+            ],
             include: [
                 {
                     model: usuario_reporte,

@@ -74,8 +74,7 @@ module.exports = {
   },
   async findAllReportsByType (req, res) {
     try{
-        const idtType = req.params.id;
-        const reporte = await reporteService.findAllReportsByType(idtType); //req.params
+        const reporte = await reporteService.findAllReportsByType(req.params); //req.params
         res.status(200).send(reporte);    
     } catch(error) {
         console.error("ERROR:",error);
@@ -116,6 +115,26 @@ module.exports = {
     try{
         const {usuario_id, tipo_id} = req.params;
         const reporte = await usuarioReporteService.listReportsByTypeAndUser(usuario_id, tipo_id); //req.params
+        res.status(200).send(reporte);    
+    } catch(error) {
+        console.error("ERROR:",error);
+        res.status(400).send(error);
+    }
+  },
+  async addFavorite (req, res) {
+    try{
+        const {usuario_id, reporte_id} = req.body;
+        if(!(usuario_id) || !(reporte_id)) throw("Error: Faltan parametros de entrada:usuario,reporte");
+        const existUserReport = await usuarioReporteService.findByUserAndReporte(usuario_id,reporte_id);
+        let reporte;
+        if (existUserReport && existUserReport.id) {
+            //update
+            req.body.favorito = !existUserReport.favorito; 
+            reporte = await usuarioReporteService.update({...req.body, id: existUserReport.id});
+        } else {
+            //create
+            reporte = await usuarioReporteService.create(req.body);
+        }
         res.status(200).send(reporte);    
     } catch(error) {
         console.error("ERROR:",error);

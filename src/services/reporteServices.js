@@ -1,6 +1,7 @@
-const Sequelize     = require('sequelize');
+const sequelize     = require('sequelize');
 const reporte       = require('../models').reporte;
 const reporte_tipo  = require('../models').reporte_tipo;
+const usuario_reporte  = require('../models').usuario_reporte;
 const tipo  = require('../models').tipo;
 
 exports.create = async (reporteData) => {
@@ -62,18 +63,33 @@ exports.DestroyReportType = async (reporteTypeDelete) => {
     });
 }
 
-exports.findAllReportsByType = async (tipo_id) => {
-    if(tipo_id === null) throw("no viene tipo especificado");
+exports.findAllReportsByType = async (data) => {
+    const {type_id, user_id } = data;
+    if(type_id === null) throw("no viene tipo especificado");
     return await reporte
         .findAll({
+            attributes:[
+                'id','nombre','descripcion', 'url','vista_reporte','fecha_visualizacion','usuario_creador','archivo','createdAt','updatedAt',
+                [
+                    sequelize.literal(`(
+                        SELECT favorito
+                        FROM usuario_reportes AS usuario_reporte
+                        WHERE
+                            usuario_reporte.usuario_id = ${user_id}
+                            AND
+                            usuario_reporte.reporte_id = reporte.id
+                    )`),
+                    'favorito'
+                ]
+            ],
             include: [
                 {
                     model: reporte_tipo,
-                where: {
-                    tipo_id: tipo_id,
+                    where: {
+                        tipo_id: type_id,
+                    }
                 }
-                }
-            ],
+            ]
         })
         .then((usuario) => usuario)
         .catch((error) => {

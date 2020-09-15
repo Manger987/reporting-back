@@ -20,13 +20,14 @@ module.exports = (app) => {
    //Reporte
    app.post('/reporte/create', reporteController.create);
    app.post('/reporte/update', reporteController.update);
+   app.post('/reporte/addFavorite', reporteController.addFavorite);
    app.get('/reporte/list', AuthSaveRoutes, reporteController.list);
    app.get('/reporte/find/:id', reporteController.find);
    app.get('/reporte/delete/:id', reporteController.delete);
    //Reporte/report_type
    app.post('/reporte/reportAssignsType', reporteController.reportAssignsType);
    app.get('/reporte/reportTypeDestroy/:id', reporteController.reportTypeDestroy);
-   app.get('/reporte/findAllReportsByType/:id', reporteController.findAllReportsByType);
+   app.get('/reporte/findAllReportsByType/:type_id/:user_id', reporteController.findAllReportsByType);
    app.get('/reporte/listReportsViewed/:id', reporteController.listReportsViewed);
    app.get('/reporte/listReportsByUser/:id', AuthSaveRoutes, reporteController.listReportsByUser);
    app.get('/reporte/listReportsFavorites/:id', reporteController.listReportsFavorites);

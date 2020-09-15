@@ -15,7 +15,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       favorito: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       visto: DataTypes.INTEGER,
       createdAt: {
