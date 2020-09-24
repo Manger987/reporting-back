@@ -26,6 +26,7 @@ module.exports = (app) => {
    app.get('/reporte/delete/:id', reporteController.delete);
    //Reporte/report_type
    app.post('/reporte/reportAssignsType', reporteController.reportAssignsType);
+   app.post('/reporte/uploadFile', reporteController.uploadFile);
    app.get('/reporte/reportTypeDestroy/:id', reporteController.reportTypeDestroy);
    app.get('/reporte/findAllReportsByType/:type_id/:user_id', reporteController.findAllReportsByType);
    app.get('/reporte/listReportsViewed/:id', reporteController.listReportsViewed);

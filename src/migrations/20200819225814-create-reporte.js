@@ -1,4 +1,7 @@
 'use strict';
+
+const { sequelize } = require("../models");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('reportes', {
@@ -28,6 +31,9 @@ module.exports = {
       },
       archivo: {
         type: Sequelize.STRING
+      },
+      activo: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         type: Sequelize.DATE

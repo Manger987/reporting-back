@@ -97,6 +97,7 @@ exports.listReportsViewed = async (usuario_id) => {
                     order: [[usuario_reporte, "updated_at", "desc"]],
                 },
             ],
+            where: { activo: 1},
             limit: 10,
         })
         .then((usuario) => usuario)
@@ -130,6 +131,7 @@ exports.listReportsByUser = async (usuario_id) => {
                     },
                 },
             ],
+            where: { activo: 1}
         })
         .then((usuario) => usuario)
         .catch((error) => {
@@ -163,6 +165,7 @@ exports.listReportsFavorites = async (usuario_id) => {
                     },
                 },
             ],
+            where: { activo: 1}
         })
         .then((usuario) => usuario)
         .catch((error) => {
@@ -173,6 +176,7 @@ exports.listReportsFavorites = async (usuario_id) => {
 exports.listReportsByTypeAndUser = async (usuario_id, tipo_id = null) => {
 
     let consulta = {
+        where: { activo: 1},
         include: [
             {
                 model: usuario_reporte,

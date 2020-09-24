@@ -1,11 +1,12 @@
 
 const reporteService = require("../services/reporteServices");
 const usuarioReporteService = require("../services/usuarioReporteServices");
+const fileUpload = require('express-fileupload');
 module.exports = {
  async create(req, res) {
      try{
         console.log("ENTREEE:",req.body);
-        const reporte = { nombre, apellido_paterno, apellido_materno, uname } = req.body;
+        const reporte = { nombre, descripcion, url, vista_reporte, fecha_visualizacion, usuario_creador, archivo } = req.body;
         const reporteCreated = await reporteService.create(reporte)
         console.log('reporteCreated:',reporteCreated.dataValues);
         res.status(200).send(reporteCreated.dataValues);
@@ -37,6 +38,7 @@ module.exports = {
         const reporte = { id,nombre,descripcion,url,vista_reporte,fecha_visualizacion,usuario_creador,archivo,updatedAt } = req.body;
         reporte.updatedAt = Date();
         const userUpdet = await reporteService.update(reporte); //req.params
+        console.log("UPDATEDDD;;", userUpdet);
         res.status(200).send(userUpdet);
     } catch (error) {
         console.error("ERROR:",error);
@@ -46,7 +48,8 @@ module.exports = {
   async delete (req, res) {
     try{
         const reporte = { id } = req.params;
-        const userDeleted = await reporteService.destroy(reporte); //req.params
+        reporte.activo = false;
+        const userDeleted = await reporteService.update(reporte); //req.params
         res.sendStatus(200).send(userDeleted);
     } catch (error) {
         console.error("ERROR:",error);
@@ -141,4 +144,14 @@ module.exports = {
         res.status(400).send(error);
     }
   },
+  async uploadFile (req,res) {
+    try{
+        const {usuario_id, tipo_id} = req.params;
+        const reporte = await usuarioReporteService.listReportsByTypeAndUser(usuario_id, tipo_id); //req.params
+        res.status(200).send(reporte);    
+    } catch(error) {
+        console.error("ERROR:",error);
+        res.status(400).send(error);
+    }
+  }
 };

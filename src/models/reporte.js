@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     fecha_visualizacion: DataTypes.DATE,
     usuario_creador: DataTypes.INTEGER,
     archivo: DataTypes.STRING,
+    activo: {
+      defaultValue: true,
+      type: DataTypes.BOOLEAN
+    },
     createdAt: {
       allowNull: false,
       defaultValue: DataTypes.NOW,

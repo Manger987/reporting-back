@@ -12,7 +12,9 @@ exports.create = async (reporteData) => {
 }
 
 exports.list = async () => {
-    return await reporte.findAll({})
+    return await reporte.findAll({
+        where: { activo: 1}
+    })
         .then(reportes => reportes)
         .catch(error => { throw new Error(error)});
 }
@@ -68,6 +70,7 @@ exports.findAllReportsByType = async (data) => {
     if(type_id === null) throw("no viene tipo especificado");
     return await reporte
         .findAll({
+            where: { activo: 1},
             attributes:[
                 'id','nombre','descripcion', 'url','vista_reporte','fecha_visualizacion','usuario_creador','archivo','createdAt','updatedAt',
                 [
