@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const Sequelize = require('sequelize');
 const usuario_reporte = require('./usuario_reporte');
 module.exports = (sequelize, DataTypes) => {
   class reporte extends Model {
@@ -28,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
     fecha_visualizacion: DataTypes.DATE,
     usuario_creador: DataTypes.INTEGER,
     archivo: DataTypes.STRING,
+    // archivo: {
+    //   type: DataTypes.ARRAY(Sequelize.JSON),
+    //   allowNull: true,
+    //   references: {
+    //       model: 'reporte_archivo',
+    //       key: 'reporte_id'
+    //   }
+    // },
     activo: {
       defaultValue: true,
       type: DataTypes.BOOLEAN
@@ -56,6 +65,12 @@ module.exports = (sequelize, DataTypes) => {
     );
     reporte.hasMany(models.reporte_tipo,
       {
+        foreignKey: 'reporte_id',
+      }
+    );
+    reporte.hasMany(models.reporte_archivo,
+      {
+        as: 'reporte_archivo',
         foreignKey: 'reporte_id',
       }
     );

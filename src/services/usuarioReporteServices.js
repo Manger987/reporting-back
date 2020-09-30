@@ -4,6 +4,7 @@ const usuario_reporte = require("../models").usuario_reporte;
 const usuario = require("../models").usuario;
 const reporte = require("../models").reporte;
 const reporte_tipo = require("../models").reporte_tipo;
+const reporte_archivo = require("../models").reporte_archivo;
 
 exports.create = async (usuarioData) => {
     return await usuario_reporte
@@ -95,7 +96,7 @@ exports.listReportsViewed = async (usuario_id) => {
                         ],
                     },
                     order: [[usuario_reporte, "updated_at", "desc"]],
-                },
+                }, { model: reporte_archivo, as: 'reporte_archivo' }
             ],
             where: { activo: 1},
             limit: 10,
@@ -129,7 +130,8 @@ exports.listReportsByUser = async (usuario_id) => {
                     where: {
                         usuario_id: usuario_id,
                     },
-                },
+                }, 
+                { model: reporte_archivo, as: 'reporte_archivo' }
             ],
             where: { activo: 1}
         })
@@ -163,7 +165,7 @@ exports.listReportsFavorites = async (usuario_id) => {
                         usuario_id: usuario_id,
                         favorito: 1,
                     },
-                },
+                }, { model: reporte_archivo, as: 'reporte_archivo' }
             ],
             where: { activo: 1}
         })
@@ -183,7 +185,7 @@ exports.listReportsByTypeAndUser = async (usuario_id, tipo_id = null) => {
                 where: {
                     usuario_id: usuario_id,
                 },
-            }
+            }, { model: reporte_archivo, as: 'reporte_archivo' }
         ],
     };
 

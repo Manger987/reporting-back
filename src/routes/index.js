@@ -1,9 +1,11 @@
+
 /* Controllers */
 const usuarioController = require('../controllers/usuarioController');
 const reporteController = require('./../controllers/reporteController');
 const perfilController = require('./../controllers/perfilController');
 const rolController = require('./../controllers/rolController');
 const tipoController = require('./../controllers/tipoController');
+const sistemController = require('./../controllers/sistemController');
 const AuthSaveRoutes = require('./../controllers/sistemController').AuthSaveRoutes;
 module.exports = (app) => {
    app.get('/', (req, res) => res.status(200).send ({
@@ -26,7 +28,6 @@ module.exports = (app) => {
    app.get('/reporte/delete/:id', reporteController.delete);
    //Reporte/report_type
    app.post('/reporte/reportAssignsType', reporteController.reportAssignsType);
-   app.post('/reporte/uploadFile', reporteController.uploadFile);
    app.get('/reporte/reportTypeDestroy/:id', reporteController.reportTypeDestroy);
    app.get('/reporte/findAllReportsByType/:type_id/:user_id', reporteController.findAllReportsByType);
    app.get('/reporte/listReportsViewed/:id', reporteController.listReportsViewed);
@@ -51,4 +52,6 @@ module.exports = (app) => {
    app.get('/tipo/list', tipoController.list);
    app.get('/tipo/find/:id', tipoController.find);
    app.get('/tipo/delete/:id', tipoController.delete);
+   //System
+   app.post('/sistem/uploadFile', sistemController.uploadFile);
 };
