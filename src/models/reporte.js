@@ -65,6 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     );
     reporte.hasMany(models.reporte_tipo,
       {
+        as: 'reporte_tipo',
         foreignKey: 'reporte_id',
       }
     );

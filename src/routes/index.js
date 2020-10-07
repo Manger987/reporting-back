@@ -34,6 +34,7 @@ module.exports = (app) => {
    app.get('/reporte/listReportsByUser/:id', AuthSaveRoutes, reporteController.listReportsByUser);
    app.get('/reporte/listReportsFavorites/:id', reporteController.listReportsFavorites);
    app.get('/reporte/listReportsByTypeAndUser/:usuario_id/:tipo_id', reporteController.listReportsByTypeAndUser);
+   app.get('/reporte/findAllForeignsReports/:desde', reporteController.findAllForeignsReports);
    //Perfil
    app.post('/perfil/create', perfilController.create);
    app.post('/perfil/update', perfilController.update);
@@ -52,6 +53,7 @@ module.exports = (app) => {
    app.get('/tipo/list', tipoController.list);
    app.get('/tipo/find/:id', tipoController.find);
    app.get('/tipo/delete/:id', tipoController.delete);
+   app.get('/tipo/getTypesAreas', tipoController.getTypesAreas);
    //System
    app.post('/sistem/uploadFile', sistemController.uploadFile);
 };

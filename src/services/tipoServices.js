@@ -24,6 +24,15 @@ exports.findById = async (id) => {
     .catch(error => { throw new Error(error)});
 }
 
+exports.getTypesAreas = async (id) => {
+        return tipo.findAll({
+            attributes: ['id','descripcion_tipo', 'tipo_id', 'descripcion_tipo'],
+            group: ['tipo_id']
+          })
+          .then(tipo => tipo)
+          .catch(error => { throw new Error(error)});
+}
+
 exports.update = async (tipoEdit) => {
     return await tipo.update(tipoEdit,{ where: { id: tipoEdit.id } })
     .then(tipo => tipo)

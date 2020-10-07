@@ -131,7 +131,8 @@ exports.listReportsByUser = async (usuario_id) => {
                         usuario_id: usuario_id,
                     },
                 }, 
-                { model: reporte_archivo, as: 'reporte_archivo' }
+                { model: reporte_archivo, as: 'reporte_archivo' },
+                { model: reporte_tipo, as: 'reporte_tipo' }
             ],
             where: { activo: 1}
         })
@@ -165,7 +166,9 @@ exports.listReportsFavorites = async (usuario_id) => {
                         usuario_id: usuario_id,
                         favorito: 1,
                     },
-                }, { model: reporte_archivo, as: 'reporte_archivo' }
+                }, 
+                { model: reporte_archivo, as: 'reporte_archivo' },
+                { model: reporte_tipo, as: 'reporte_tipo' }
             ],
             where: { activo: 1}
         })
@@ -185,7 +188,9 @@ exports.listReportsByTypeAndUser = async (usuario_id, tipo_id = null) => {
                 where: {
                     usuario_id: usuario_id,
                 },
-            }, { model: reporte_archivo, as: 'reporte_archivo' }
+            }, 
+            { model: reporte_archivo, as: 'reporte_archivo' },
+            { model: reporte_tipo, as: 'reporte_tipo' }
         ],
     };
 

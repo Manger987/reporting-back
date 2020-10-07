@@ -11,6 +11,10 @@ exports.create = async (reporteData) => {
             include: [{
                 model: reporte_archivo,
                 as: 'reporte_archivo'
+            },
+            {
+                model: reporte_tipo,
+                as: 'reporte_tipo'
             }]
         })
         .then(async reporte => {
@@ -99,11 +103,12 @@ exports.findAllReportsByType = async (data) => {
             ],
             include: [
                 {
-                    model: reporte_tipo,
+                    model: reporte_tipo, as: 'reporte_tipo',
                     where: {
                         tipo_id: type_id,
                     }
-                }, { model: reporte_archivo, as: 'reporte_archivo' }
+                }, 
+                { model: reporte_archivo, as: 'reporte_archivo' }
             ]
         })
         .then((usuario) => usuario)
@@ -113,22 +118,28 @@ exports.findAllReportsByType = async (data) => {
 }
 
 exports.create_reporte_archivo = async (reporteData) => {
-    let filesSaved = [];
-    // await reporteData.map(async file => {
-    //     file.reporte_id = reporte_id;
         await reporte_archivo
             .bulkCreate(reporteData)
             .then(reporteArchivo => {
                 reporteArchivo.dataValues
             })
             .catch(error => { throw new Error(error) });
-        // filesSaved.push(fileSaved);
-    // });
-    // return filesSaved;
 }
 
 exports.destroy_reporte_archivo = async (reporteDelete) => {
     return await reporte_archivo.destroy({ where: { id: reporteDelete.id } })
         .then(reporte => reporte)
         .catch(error => { throw new Error(error) });
+}
+
+exports.findAllForeignsReports = async () => {
+    return await reporte.findAll({
+        where: { vista_reporte: 1 },
+        include: [
+            { model: reporte_tipo, as: 'reporte_tipo' },
+            { model: reporte_archivo, as: 'reporte_archivo' }
+        ]
+    })
+    .then(reporte => reporte)
+    .catch(error => { throw new Error(error) });
 }

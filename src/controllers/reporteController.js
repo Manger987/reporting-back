@@ -141,4 +141,13 @@ module.exports = {
             res.status(400).send(error);
         }
     },
+    async findAllForeignsReports(req, res) {
+        try {
+            const reporte = await reporteService.findAllForeignsReports(req.params); //req.params
+            res.status(200).send(reporte);
+        } catch (error) {
+            console.error("ERROR:", error);
+            res.status(400).send(error);
+        }
+    },
 };

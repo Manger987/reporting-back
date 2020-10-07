@@ -53,5 +53,14 @@ module.exports = {
         console.error("ERROR:",error);
         res.status(400).send(error);
     }
-  }
+  },
+  async getTypesAreas(req, res) {
+    try {
+        const reporte = await TipoService.getTypesAreas();
+        res.status(200).send(reporte);
+    } catch (error) {
+        console.error("ERROR getTypesAreas:", error);
+        res.status(400).send(error);
+    }
+},
 };
