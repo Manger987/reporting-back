@@ -30,7 +30,7 @@ module.exports = {
         const usuario = await UsuarioService.findByUsername(req.params.username); //req.params
         res.status(200).send(usuario);
     } catch (error) {
-        console.error("ERROR:",error);
+        console.error("ERROR find:",error);
         res.status(400).send(error);
     }
   },
